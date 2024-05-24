@@ -15,15 +15,15 @@
 def follow():
     payload = request.json
     userId = int(payload['id'])
-    userIdToFollow = int(payload['follow'])
+    userIdToFollow = int(payload['unfollow'])
 
     if userId not id app.users or userIdToFollow not in app.users:
         return '사용자가 존재하지 않습니다', 400
     
     user = app.users[userId]
     if user.get('follow'):
-        user['follow'].append(userIdToFollow)
-        user['follow'] = list(set(user['follow']))
+        try:    user['follow'].remove(userIdToFollow)
+        except: pass
     else:
         user['follow'] = [userIdToFollow]
     return jsonify(user)        
